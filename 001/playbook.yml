@@ -1,0 +1,10 @@
+---
+- hosts: all
+  user: saybot
+  tasks:
+    - debug:
+       msg: " System {{ inventory_hostname }}"
+    - shell: hostname
+      register: result
+    - debug:
+        var: result
