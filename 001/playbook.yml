@@ -3,7 +3,7 @@
   user: saybot
   tasks:
     - debug:
-       msg: " System {{ inventory_hostname }}"
+       msg: " System {{ inventory_hostname }} had major nic name: {{ ansible_default_ipv4.interface }}"
     - shell: hostname
       register: result
     - debug:
