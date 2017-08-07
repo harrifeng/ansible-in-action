@@ -30,6 +30,7 @@
         - automake
         - libtool
         - bison
+        - mysql-devel
     - name: Install Pip Packages
       pip:
         name: "{{ item }}"
