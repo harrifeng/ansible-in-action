@@ -1,6 +1,8 @@
 ---
 - hosts: all
   sudo: yes
+  vars:
+    ruby_version: ruby-1.9.3-p484
   tasks:
     - debug:
        msg: " System {{ inventory_hostname }} had major nic name: {{ ansible_default_ipv4.interface }}"
@@ -12,13 +14,31 @@
         - python-pip
         - python-devel
         - gcc
+        - curl
+        - gcc-c++
+        - patch
+        - readline
+        - readline-devel
+        - zlib
+        - zlib-devel
+        - libyaml-devel
+        - libffi-devel
+        - openssl-devel
+        - make
+        - bzip2
+        - autoconf
+        - automake
+        - libtool
+        - bison
     - name: Install Pip Packages
       pip:
         name: "{{ item }}"
         state: present
       with_items:
         - pip
-    - shell: hostname
-      register: result
-    - debug:
-        var: result
+  roles:
+    - { role: rvm_io.ruby,
+        tags: ruby,
+        rvm1_rubies: ['ruby-1.9.3-p484'],
+        rvm1_user: 'root'
+      }
