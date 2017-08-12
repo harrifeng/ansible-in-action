@@ -1,0 +1,14 @@
+---
+- hosts: all
+  vars:
+    - version: 25.2
+    - checksum: md5:0a36d1cdbba6024d4dbbac027f87995f
+  tasks:
+    - name: Download emacs {{ version }}
+      debug:
+        msg: version is {{ version }}
+    - name: Get the source code
+      get_url:
+        url: https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/emacs-{{ version }}.tar.gz
+        dest: /tmp/emacs.tar.gz
+        checksum: "{{ checksum }}"
