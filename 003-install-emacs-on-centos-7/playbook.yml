@@ -7,8 +7,30 @@
     - name: Download emacs {{ version }}
       debug:
         msg: version is {{ version }}
+    - name: Install needed package
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - libXpm-devel
+        - libjpeg-turbo-devel
+        - openjpeg-devel
+        - openjpeg2-devel
+        - turbojpeg-devel
+        - giflib-devel
+        - libtiff-devel
+        - gnutls-devel
+        - libxml2-devel
+        - GConf2-devel
+        - dbus-devel
+        - wxGTK-devel
+        - gtk3-devel
     - name: Get the source code
       get_url:
         url: https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/emacs-{{ version }}.tar.gz
         dest: /tmp/emacs.tar.gz
         checksum: "{{ checksum }}"
+    - name: Unarchive the file
+      unarchive:
+        src: /tmp/emacs.tar.gz
+        dest: /tmp/emacs
