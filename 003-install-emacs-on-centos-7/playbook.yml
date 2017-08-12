@@ -25,12 +25,16 @@
         - dbus-devel
         - wxGTK-devel
         - gtk3-devel
-    - name: Get the source code
-      get_url:
-        url: https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/emacs-{{ version }}.tar.gz
-        dest: /tmp/emacs.tar.gz
-        checksum: "{{ checksum }}"
+        - ncurses-devel
     - name: Unarchive the file
       unarchive:
-        src: /tmp/emacs.tar.gz
-        dest: /tmp/emacs
+        src: https://mirrors.tuna.tsinghua.edu.cn/gnu/emacs/emacs-{{ version }}.tar.gz
+        dest: /tmp
+        remote_src: yes
+    - name: Install
+      shell: |
+        ./configure
+        make
+        make install
+      args:
+        chdir: /tmp/emacs-{{ version }}
