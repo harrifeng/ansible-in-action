@@ -1,0 +1,19 @@
+---
+- hosts: openstack1
+  vars:
+    - vnc_conf_file: /etc/systemd/system/vncserver@:1.service
+  tasks:
+    - name: Install needed package
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - tigervnc-server
+    - name: stat vnc
+      stat:
+        path: "{{ vnc_conf_file }}"
+      register: vnc_stat
+    - name: echo
+      shell: |
+        cp /lib/systemd/system/vncserver@.service "{{ vnc_conf_file }}"
+      when: not vnc_stat.stat.exists
